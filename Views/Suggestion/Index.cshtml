@@ -1,0 +1,47 @@
+@model ICollection<SuggestionInfoViewModel>
+@{
+    ViewData["Title"] = "Препоръки";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3" style="margin-top: 20px;">
+    <h2>@ViewData["Title"]</h2>
+    @if (User?.Identity?.IsAuthenticated == true)
+    {
+        <a asp-controller="Suggestion" asp-action="Create" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Добави Препоръка
+        </a>
+    }
+</div>
+<hr />
+
+<div class="row text-center">
+    @foreach (var suggestion in Model)
+    {
+        <div class="col-md-4 mb-4">
+            <div class="card h-100" style="width: 100%;">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">@suggestion.Title</h5>
+                    <p class="card-text">@suggestion.Description</p>
+                    <p class="card-text text-muted">Публикуван от: @suggestion.UserId</p>
+                    <p class="card-text text-muted">Статус: @suggestion.Status</p>
+                    <p class="card-text text-muted">Публикуван на: @suggestion.CreatedOn</p>
+
+                    <div class="d-flex justify-content-between mt-auto">
+                        @if (User?.Identity?.IsAuthenticated == true && suggestion.UserId == User.Identity.Name)
+                        {
+                            <a asp-controller="Suggestion" asp-action="Edit" asp-route-id="@suggestion.Id" class="btn btn-warning me-2 w-50">Edit</a>
+                            <form asp-controller="Suggestion" asp-action="Delete" method="post" class="w-50">
+                                <input type="hidden" name="id" value="@suggestion.Id" />
+                                <button type="submit" class="btn btn-danger w-100">Изтрий</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <a asp-controller="Suggestion" asp-action="Details" asp-route-id="@suggestion.Id" class="btn btn-info w-100">Детайли</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
