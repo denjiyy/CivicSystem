@@ -1,4 +1,5 @@
 using CivicSystem.Data;
+using CivicSystem.Services.Mapping;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,6 +27,8 @@ namespace CivicSystem
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
+
+            AutoMapperConfig.RegisterMappings();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
