@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,9 +12,11 @@ namespace CivicSystem.Data.Repositories.Contracts
 
         Task<TType> GetByIdAsync(TId id);
 
-        ICollection<TType> GetAll();
+        IEnumerable<TType> GetAll();
 
-        Task<ICollection<TType>> GetAllAsync();
+        Task<IEnumerable<TType>> GetAllAsync();
+
+        IEnumerable<TType> GetAllAttached();
 
         void Add(TType item);
 
